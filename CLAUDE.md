@@ -1,6 +1,6 @@
 # AI Labs MCP Servers
 
-Custom read-only MCP connectors deployed as hosted connectors on [MintMCP](https://app.mintmcp.com).
+Custom MCP connectors deployed as hosted connectors on [MintMCP](https://app.mintmcp.com).
 
 ## Server Convention
 
@@ -8,11 +8,12 @@ Follow the `mintmcp/zendesk-mcp` pattern exactly:
 
 - **Transport:** Streamable HTTP at `/mcp` on port 8000. Prefer HTTP over stdio.
 - **Framework:** Express + `@modelcontextprotocol/sdk` (TypeScript)
-- **Auth:** Global API key/token from `process.env`. No per-user credentials.
+- **Auth:** Two modes:
+  - **Global API key:** read from `process.env`, shared across all users
+  - **Per-user OAuth:** MintMCP handles the OAuth flow. Server just reads `Authorization: Bearer <token>` from the request header. Configure OAuth (auth URL, token URL, client ID/secret, scopes) in MintMCP UI after deploy.
 - **Health:** `GET /healthz` returns `{ status: "ok" }`
 - **Startup:** `initialize` and `tools/list` must succeed without credentials (tools registered statically, auth checked at call time)
 - **Docker:** Multi-stage build, `node:22-slim`, final image under 250MB, `linux/amd64`
-- **Tools:** Read-only only. No mutating tools registered.
 
 ## Deploy Workflow
 
