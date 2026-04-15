@@ -8,7 +8,8 @@ Custom MCP servers for DNSFilter, deployed as hosted connectors on MintMCP.
 |---|---|---|---|---|
 | [zendesk-readonly](./zendesk-readonly/) | HTTP | Global API token | 5 read-only | Pending API token |
 | [canny](./canny/) | HTTP | Global API key | 24 read-only | Live on MintMCP |
-| [plausible](./plausible/) | HTTP | Global API key | 8 read-only | Ready to deploy |
+| [plausible](./plausible/) | HTTP | Global API key | 8 read-only | Pending deploy |
+| [semrush](./semrush/) | HTTP | Global API key | 11 read-only | Ready to deploy |
 
 ## Structure
 
@@ -18,6 +19,7 @@ Each connector is self-contained with its own `Dockerfile`, `package.json`, and 
 zendesk-readonly/    # Read-only Zendesk access via service account
 canny/               # Read-only Canny feedback access
 plausible/           # Read-only Plausible Analytics access
+semrush/             # Read-only Semrush SEO & competitive intelligence
 ```
 
 ## Deploying to MintMCP
