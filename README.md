@@ -10,6 +10,7 @@ Custom MCP servers for DNSFilter, deployed as hosted connectors on MintMCP.
 | [canny](./canny/) | HTTP | Global API key | 24 read-only | Live on MintMCP |
 | [plausible](./plausible/) | HTTP | Global API key | 8 read-only | Pending deploy |
 | [semrush](./semrush/) | HTTP | Global API key | 11 read-only | Ready to deploy |
+| [gsc](./gsc/) | HTTP | Per-user OAuth (Google) | 15 tools (13 read, 2 write) | Ready to deploy |
 
 ## Structure
 
@@ -20,6 +21,7 @@ zendesk-readonly/    # Read-only Zendesk access via service account
 canny/               # Read-only Canny feedback access
 plausible/           # Read-only Plausible Analytics access
 semrush/             # Read-only Semrush SEO & competitive intelligence
+gsc/                 # Google Search Console (per-user OAuth, forked from mintmcp)
 ```
 
 ## Deploying to MintMCP
