@@ -36,6 +36,19 @@ Uses MintMCP admin MCP tools (available in Claude via the MintMCP Admin connecto
 - `isSecret: true` for API keys/tokens (entered via MintMCP UI, never in code)
 - `isSecret: false` for domains, feature flags, non-sensitive config
 
+## Reference Implementations
+
+MintMCP open-sources their own hosted connectors. Use these as the canonical reference for patterns, auth handling, and transport conventions:
+
+- [mintmcp/zendesk-mcp](https://github.com/mintmcp/zendesk-mcp) — OAuth passthrough, HTTP transport (our primary template)
+- [mintmcp/salesforce-mcp](https://github.com/mintmcp/salesforce-mcp) — OAuth + Salesforce REST
+- [mintmcp/snowflake-mcp](https://github.com/mintmcp/snowflake-mcp) — Database connector pattern
+- [mintmcp/elasticsearch-mcp](https://github.com/mintmcp/elasticsearch-mcp) — Search/query pattern
+- [mintmcp/google-search-console-mcp](https://github.com/mintmcp/google-search-console-mcp) — Google OAuth
+- [mintmcp/teradata-mcp](https://github.com/mintmcp/teradata-mcp) — Database connector pattern
+
+When building a new connector, check these repos first for the closest match to your integration type.
+
 ## Structure
 
 Each connector is self-contained: own `src/`, `Dockerfile`, `package.json`. They build and deploy independently.
