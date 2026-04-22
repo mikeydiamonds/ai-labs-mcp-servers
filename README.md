@@ -12,6 +12,7 @@ Custom MCP servers for DNSFilter, deployed as hosted connectors on MintMCP.
 | [semrush](./semrush/) | HTTP | Global API key | 11 read-only | Ready to deploy |
 | [gsc](./gsc/) | HTTP | Per-user OAuth (Google) | 15 tools (13 read, 2 write) | Ready to deploy |
 | [vitally](./vitally/) | HTTP | Global API key | 69 tools (full CRUD) | Pending deploy |
+| [vizard](./vizard/) | HTTP | Global API key | 6 tools (full API) | Pending deploy |
 
 ## Structure
 
@@ -24,6 +25,7 @@ plausible/           # Read-only Plausible Analytics access
 semrush/             # Read-only Semrush SEO & competitive intelligence
 gsc/                 # Google Search Console (per-user OAuth, forked from mintmcp)
 vitally/             # Vitally Customer Success Platform (full REST surface)
+vizard/              # Vizard AI video clipping, editing, publishing
 ```
 
 ## Deploying to MintMCP
