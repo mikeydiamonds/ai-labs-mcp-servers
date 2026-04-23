@@ -1,5 +1,5 @@
 {
-  "name": "youtube-oauth-mcp",
+  "name": "youtube-user-mcp",
   "version": "1.0.0",
   "description": "YouTube Data API v3 MCP server (streamable HTTP, per-user OAuth passthrough)",
   "type": "module",

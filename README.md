@@ -15,7 +15,7 @@ Custom MCP servers for DNSFilter, deployed as hosted connectors on MintMCP.
 | [vizard](./vizard/) | HTTP | Global API key | 6 tools (full API) | Pending deploy |
 | [reddit](./reddit/) | HTTP | Script-app OAuth | Read-only | Ready to deploy |
 | [youtube](./youtube/) | HTTP | Global OAuth2 refresh-token | 13 tools (6 read, 7 write) | Ready to deploy |
-| [youtube-oauth](./youtube-oauth/) | HTTP | Per-user OAuth (Google) | 13 tools (6 read, 7 write) | Ready to deploy |
+| [youtube-user](./youtube-user/) | HTTP | Per-user OAuth (Google) | 13 tools (6 read, 7 write) | Ready to deploy |
 
 ## Structure
 
@@ -31,7 +31,7 @@ vitally/             # Vitally Customer Success Platform (full REST surface)
 vizard/              # Vizard AI video clipping, editing, publishing
 reddit/              # Reddit read-only via script-app OAuth
 youtube/             # YouTube Data API v3 (global OAuth2 refresh-token)
-youtube-oauth/       # YouTube Data API v3 (per-user OAuth passthrough)
+youtube-user/        # YouTube Data API v3 (per-user OAuth passthrough)
 ```
 
 ## Deploying to MintMCP

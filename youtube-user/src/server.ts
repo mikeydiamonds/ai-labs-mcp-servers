@@ -30,7 +30,7 @@ import {
 } from "./youtube-client.js";
 
 const server = new McpServer(
-  { name: "youtube-oauth", version: "1.0.0" },
+  { name: "youtube-user", version: "1.0.0" },
   {
     instructions: [
       "YouTube MCP server with per-user Google OAuth.",
@@ -272,5 +272,5 @@ app.post("/mcp", async (req, res) => {
 
 const PORT = parseInt(process.env.PORT || "8000", 10);
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`YouTube OAuth MCP server listening on 0.0.0.0:${PORT}/mcp`);
+  console.log(`YouTube (per-user) MCP server listening on 0.0.0.0:${PORT}/mcp`);
 });
