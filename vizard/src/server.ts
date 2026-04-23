@@ -127,7 +127,7 @@ server.registerTool(
     inputSchema: {
       finalVideoId: z.number().int().describe("finalVideoId returned by get_project_clips."),
       socialAccountId: z.string().describe("Social account ID from list_social_accounts."),
-      publishTime: z.number().int().optional().describe("Unix timestamp for scheduled publish. Omit for immediate post."),
+      publishTime: z.number().int().optional().describe("Unix timestamp in MILLISECONDS (13 digits) for scheduled publish. Vizard treats seconds-values as 1970 and silently no-ops. Omit for immediate post."),
       post: z.string().optional().describe("Custom post caption/description. AI-generated if empty."),
       title: z.string().optional().describe("Video title (YouTube only). AI-generated if blank."),
     },
