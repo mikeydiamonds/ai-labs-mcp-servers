@@ -1,0 +1,28 @@
+{
+  "name": "gong-viewer-mcp",
+  "version": "1.0.0",
+  "description": "Gong MCP server (streamable HTTP, global API key Basic auth, read-only) — call data, transcripts, users, and stats via Gong's REST API v2.",
+  "type": "module",
+  "main": "dist/server.js",
+  "bin": "dist/server.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/server.ts",
+    "start": "node dist/server.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "express": "^5.2.1",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.6.0",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
