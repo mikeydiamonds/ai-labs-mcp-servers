@@ -18,7 +18,8 @@ Naming convention: slug suffix encodes auth identity. `-svc` = shared service-ac
 | [youtube-user](./youtube-user/) | HTTP | Per-user OAuth (Google) | 13 tools (6 read, 7 write) | Ready to deploy |
 | [gong-viewer](./gong-viewer/) | HTTP | Global API key (Basic) | 11 read-only | Live on MintMCP |
 | [vizard-svc](./vizard-svc/) | HTTP | Global API key | 6 tools (full API) | Live on MintMCP |
-| [vitally-svc](./vitally-svc/) | HTTP | Global API key | 69 tools (full CRUD) | Pending deploy |
+| [vitally-viewer](./vitally-viewer/) | HTTP | Global API key (Basic) | 34 read-only | Live on MintMCP |
+| [vitally-svc](./vitally-svc/) | HTTP | Global API key | 69 tools (full CRUD) | Not deployed (use vitally-viewer for read access) |
 | [scriberr-svc](./scriberr-svc/) | HTTP | Global API key | Self-hosted transcription | Pending deploy |
 | [tts-gateway-svc](./tts-gateway-svc/) | HTTP | Global API key | Self-hosted audio gateway | Pending deploy |
 
@@ -37,7 +38,8 @@ gsc-user/            # Google Search Console (per-user OAuth, forked from mintmc
 youtube-svc/         # YouTube Data API v3 (shared OAuth2 refresh-token, brand identity)
 youtube-user/        # YouTube Data API v3 (per-user OAuth passthrough)
 vizard-svc/          # Vizard AI video clipping, editing, publishing
-vitally-svc/         # Vitally Customer Success Platform (full REST surface)
+vitally-viewer/      # Vitally Customer Success Platform (read-only, 34 tools)
+vitally-svc/         # Vitally Customer Success Platform (full REST surface, 69 tools)
 scriberr-svc/        # Self-hosted Scriberr transcription
 tts-gateway-svc/     # Self-hosted TTS/STT/voice-cloning audio gateway
 ```
