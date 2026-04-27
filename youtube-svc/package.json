@@ -1,7 +1,7 @@
 {
-  "name": "plausible-mcp",
+  "name": "youtube-svc-mcp",
   "version": "1.0.0",
-  "description": "Plausible Analytics MCP server (streamable HTTP, global API key auth, read-only)",
+  "description": "YouTube Data API v3 MCP server (streamable HTTP, global OAuth2 refresh-token auth)",
   "type": "module",
   "main": "dist/server.js",
   "bin": "dist/server.js",

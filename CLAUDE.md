@@ -15,6 +15,23 @@ Follow the `mintmcp/zendesk-mcp` pattern exactly:
 - **Startup:** `initialize` and `tools/list` must succeed without credentials (tools registered statically, auth checked at call time)
 - **Docker:** Multi-stage build, `node:22-slim`, final image under 250MB, `linux/amd64`
 
+## Naming Convention
+
+Connector slugs encode the auth identity in a suffix. All tiers are explicit. No unsuffixed defaults.
+
+| Suffix | Identity | Scope | Example |
+|---|---|---|---|
+| `-svc` | shared service-account credential | full CRUD | `youtube-svc` |
+| `-viewer` | shared service-account credential | read-only | `plausible-viewer` |
+| `-user` | per-user OAuth (human identity) | user's own perms | `gsc-user` |
+| `-agent` | autonomous AI agent identity | reserved for future use | (none yet) |
+
+Rules:
+
+- `-viewer` collapses identity and scope. Read-only API keys always pair this way in practice. Do not write `-svc-viewer`.
+- Reserve `-agent` for AI principals with their own identity (Microsoft Entra Agent ID, Okta AI Agents, Google Agent Identity). Do not use it for shared keys called by AI.
+- The MintMCP `userGivenName` (display name in Claude Desktop) should add human context: `youtube-svc` shows as "YouTube (DNSFilter brand)", `youtube-user` shows as "YouTube (your account)", `canny-viewer` shows as "Canny (read-only)".
+
 ## Deploy Workflow
 
 Uses MintMCP admin MCP tools (available in Claude via the MintMCP Admin connector):

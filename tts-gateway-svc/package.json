@@ -1,7 +1,7 @@
 {
-  "name": "gsc-mcp",
+  "name": "tts-gateway-svc-mcp",
   "version": "1.0.0",
-  "description": "Google Search Console MCP server (streamable HTTP, per-user OAuth)",
+  "description": "Audio Gateway MCP server (streamable HTTP, global API key auth) — TTS/STT/SFX/voice-cloning via a self-hosted homelab gateway.",
   "type": "module",
   "main": "dist/server.js",
   "bin": "dist/server.js",
@@ -14,7 +14,6 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
     "express": "^5.2.1",
-    "googleapis": "^148.0.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {

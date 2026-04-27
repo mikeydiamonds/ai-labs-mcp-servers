@@ -1,7 +1,7 @@
 {
-  "name": "vitally-mcp",
+  "name": "zendesk-viewer-mcp",
   "version": "1.0.0",
-  "description": "Vitally MCP server (streamable HTTP, global API key auth)",
+  "description": "Zendesk MCP server (streamable HTTP, OAuth pass-through via headers)",
   "type": "module",
   "main": "dist/server.js",
   "bin": "dist/server.js",
@@ -10,6 +10,11 @@
     "dev": "tsx src/server.ts",
     "start": "node dist/server.js"
   },
+  "keywords": [
+    "mcp",
+    "zendesk",
+    "mintmcp"
+  ],
   "license": "MIT",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",

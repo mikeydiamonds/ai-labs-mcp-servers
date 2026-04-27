@@ -4,34 +4,40 @@ Custom MCP servers for DNSFilter, deployed as hosted connectors on MintMCP.
 
 ## Connectors
 
+Naming convention: slug suffix encodes auth identity. `-svc` = shared service-account credential, full CRUD. `-viewer` = shared service-account credential, read-only. `-user` = per-user OAuth. `-agent` reserved for autonomous AI agents. See [CLAUDE.md](./CLAUDE.md) for the full convention.
+
 | Connector | Transport | Auth | Tools | Status |
 |---|---|---|---|---|
-| [zendesk-readonly](./zendesk-readonly/) | HTTP | Global API token | 5 read-only | Pending API token |
-| [canny](./canny/) | HTTP | Global API key | 24 read-only | Live on MintMCP |
-| [plausible](./plausible/) | HTTP | Global API key | 8 read-only | Pending deploy |
-| [semrush](./semrush/) | HTTP | Global API key | 11 read-only | Ready to deploy |
-| [gsc](./gsc/) | HTTP | Per-user OAuth (Google) | 15 tools (13 read, 2 write) | Ready to deploy |
-| [vitally](./vitally/) | HTTP | Global API key | 69 tools (full CRUD) | Pending deploy |
-| [vizard](./vizard/) | HTTP | Global API key | 6 tools (full API) | Pending deploy |
-| [reddit](./reddit/) | HTTP | Script-app OAuth | Read-only | Ready to deploy |
-| [youtube](./youtube/) | HTTP | Global OAuth2 refresh-token | 13 tools (6 read, 7 write) | Ready to deploy |
+| [zendesk-viewer](./zendesk-viewer/) | HTTP | Global API token | 5 read-only | Pending API token |
+| [canny-viewer](./canny-viewer/) | HTTP | Global API key | 24 read-only | Live on MintMCP |
+| [plausible-viewer](./plausible-viewer/) | HTTP | Global API key | 8 read-only | Live on MintMCP |
+| [semrush-viewer](./semrush-viewer/) | HTTP | Global API key | 11 read-only | Live on MintMCP |
+| [reddit-viewer](./reddit-viewer/) | HTTP | Script-app OAuth | Read-only | Live on MintMCP |
+| [gsc-user](./gsc-user/) | HTTP | Per-user OAuth (Google) | 15 tools (13 read, 2 write) | Live on MintMCP |
+| [youtube-svc](./youtube-svc/) | HTTP | Global OAuth2 refresh-token | 13 tools (6 read, 7 write) | Live on MintMCP |
 | [youtube-user](./youtube-user/) | HTTP | Per-user OAuth (Google) | 13 tools (6 read, 7 write) | Ready to deploy |
+| [vizard-svc](./vizard-svc/) | HTTP | Global API key | 6 tools (full API) | Live on MintMCP |
+| [vitally-svc](./vitally-svc/) | HTTP | Global API key | 69 tools (full CRUD) | Pending deploy |
+| [scriberr-svc](./scriberr-svc/) | HTTP | Global API key | Self-hosted transcription | Pending deploy |
+| [tts-gateway-svc](./tts-gateway-svc/) | HTTP | Global API key | Self-hosted audio gateway | Pending deploy |
 
 ## Structure
 
 Each connector is self-contained with its own `Dockerfile`, `package.json`, and source. They build and deploy independently to MintMCP.
 
 ```
-zendesk-readonly/    # Read-only Zendesk access via service account
-canny/               # Read-only Canny feedback access
-plausible/           # Read-only Plausible Analytics access
-semrush/             # Read-only Semrush SEO & competitive intelligence
-gsc/                 # Google Search Console (per-user OAuth, forked from mintmcp)
-vitally/             # Vitally Customer Success Platform (full REST surface)
-vizard/              # Vizard AI video clipping, editing, publishing
-reddit/              # Reddit read-only via script-app OAuth
-youtube/             # YouTube Data API v3 (global OAuth2 refresh-token)
+zendesk-viewer/      # Read-only Zendesk access via service account
+canny-viewer/        # Read-only Canny feedback access
+plausible-viewer/    # Read-only Plausible Analytics access
+semrush-viewer/      # Read-only Semrush SEO & competitive intelligence
+reddit-viewer/       # Reddit read-only via script-app OAuth
+gsc-user/            # Google Search Console (per-user OAuth, forked from mintmcp)
+youtube-svc/         # YouTube Data API v3 (shared OAuth2 refresh-token, brand identity)
 youtube-user/        # YouTube Data API v3 (per-user OAuth passthrough)
+vizard-svc/          # Vizard AI video clipping, editing, publishing
+vitally-svc/         # Vitally Customer Success Platform (full REST surface)
+scriberr-svc/        # Self-hosted Scriberr transcription
+tts-gateway-svc/     # Self-hosted TTS/STT/voice-cloning audio gateway
 ```
 
 ## Deploying to MintMCP

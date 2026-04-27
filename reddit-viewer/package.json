@@ -1,7 +1,7 @@
 {
-  "name": "canny-mcp",
+  "name": "reddit-viewer-mcp",
   "version": "1.0.0",
-  "description": "Canny MCP server (streamable HTTP, global API key auth, read-only)",
+  "description": "Reddit MCP server (streamable HTTP, global OAuth script-app auth, read-only)",
   "type": "module",
   "main": "dist/server.js",
   "bin": "dist/server.js",

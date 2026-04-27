@@ -1,7 +1,7 @@
 {
-  "name": "scriberr-mcp",
+  "name": "semrush-viewer-mcp",
   "version": "1.0.0",
-  "description": "Scriberr MCP server (streamable HTTP, global API key auth) — transcribe audio/video with diarization via a self-hosted Scriberr instance.",
+  "description": "Semrush MCP server (streamable HTTP, global API key auth, read-only)",
   "type": "module",
   "main": "dist/server.js",
   "bin": "dist/server.js",

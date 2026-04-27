@@ -1,7 +1,7 @@
 {
-  "name": "reddit-mcp",
+  "name": "vitally-svc-mcp",
   "version": "1.0.0",
-  "description": "Reddit MCP server (streamable HTTP, global OAuth script-app auth, read-only)",
+  "description": "Vitally MCP server (streamable HTTP, global API key auth)",
   "type": "module",
   "main": "dist/server.js",
   "bin": "dist/server.js",

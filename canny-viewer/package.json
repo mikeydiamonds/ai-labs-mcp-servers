@@ -1,7 +1,7 @@
 {
-  "name": "tts-gateway-mcp",
+  "name": "canny-viewer-mcp",
   "version": "1.0.0",
-  "description": "Audio Gateway MCP server (streamable HTTP, global API key auth) — TTS/STT/SFX/voice-cloning via a self-hosted homelab gateway.",
+  "description": "Canny MCP server (streamable HTTP, global API key auth, read-only)",
   "type": "module",
   "main": "dist/server.js",
   "bin": "dist/server.js",

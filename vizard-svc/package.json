@@ -1,7 +1,7 @@
 {
-  "name": "semrush-mcp",
+  "name": "vizard-svc-mcp",
   "version": "1.0.0",
-  "description": "Semrush MCP server (streamable HTTP, global API key auth, read-only)",
+  "description": "Vizard MCP server (streamable HTTP, global API key auth, full API)",
   "type": "module",
   "main": "dist/server.js",
   "bin": "dist/server.js",

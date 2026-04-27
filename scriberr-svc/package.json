@@ -1,7 +1,7 @@
 {
-  "name": "vizard-mcp",
+  "name": "scriberr-svc-mcp",
   "version": "1.0.0",
-  "description": "Vizard MCP server (streamable HTTP, global API key auth, full API)",
+  "description": "Scriberr MCP server (streamable HTTP, global API key auth) — transcribe audio/video with diarization via a self-hosted Scriberr instance.",
   "type": "module",
   "main": "dist/server.js",
   "bin": "dist/server.js",
