@@ -323,3 +323,41 @@ export async function searchTickets(query: string, params?: { page?: number }): 
     },
   });
 }
+
+// ─── Users ──────────────────────────────────────────────────────────────────
+
+export async function getUser(id: number): Promise<unknown> {
+  const res = await zendeskRequest<{ user: unknown }>({
+    method: "GET",
+    path: `/api/v2/users/${id}.json`,
+  });
+  return res.user;
+}
+
+export async function searchUsers(query: string, params?: { page?: number }): Promise<unknown> {
+  return zendeskRequest({
+    method: "GET",
+    path: "/api/v2/users/search.json",
+    query: {
+      query,
+      page: params?.page ?? 1,
+      per_page: 20,
+    },
+  });
+}
+
+export async function getUserTickets(
+  userId: number,
+  params?: { page?: number; status?: string }
+): Promise<unknown> {
+  const q: Record<string, string | number | undefined> = {
+    page: params?.page ?? 1,
+    per_page: 20,
+  };
+  if (params?.status) q.status = params.status;
+  return zendeskRequest({
+    method: "GET",
+    path: `/api/v2/users/${userId}/tickets/requested.json`,
+    query: q,
+  });
+}

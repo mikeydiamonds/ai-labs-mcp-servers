@@ -15,6 +15,9 @@ import {
   searchTickets,
   getAttachment,
   fetchAttachment,
+  getUser,
+  searchUsers,
+  getUserTickets,
 } from "./zendesk-client.js";
 
 const server = new McpServer({ name: "zendesk-readonly", version: "1.0.0" });
@@ -52,6 +55,20 @@ function shapeTicketDetail(t: any) {
     custom_fields: (t.custom_fields ?? []).filter((f: any) => f.value != null),
     collaborator_ids: t.collaborator_ids ?? [],
     brand_id: t.brand_id ?? null,
+  };
+}
+
+function shapeUserSummary(u: any) {
+  return {
+    id: u.id,
+    name: u.name ?? null,
+    email: u.email ?? null,
+    role: u.role ?? null,
+    organization_id: u.organization_id ?? null,
+    suspended: u.suspended ?? false,
+    verified: u.verified ?? false,
+    created_at: u.created_at,
+    updated_at: u.updated_at,
   };
 }
 
@@ -134,6 +151,18 @@ const PaginationShape = {
   previous_page: z.string().nullable(),
 };
 
+const UserSummaryShape = {
+  id: z.number(),
+  name: z.string().nullable(),
+  email: z.string().nullable(),
+  role: z.string().nullable(),
+  organization_id: z.number().nullable(),
+  suspended: z.boolean(),
+  verified: z.boolean(),
+  created_at: z.string(),
+  updated_at: z.string(),
+};
+
 // ─── Read-only tools ────────────────────────────────────────────────────────
 
 server.registerTool(
@@ -187,7 +216,20 @@ server.registerTool(
   "search_tickets",
   {
     description:
-      "Search tickets using Zendesk search syntax (e.g. 'status:open priority:high'). See Zendesk search reference for operators.",
+      "Search tickets using Zendesk search syntax. Useful operators: " +
+      "requester:email@domain.com (specific user), " +
+      "organization:\"Org Name\", " +
+      "tags:tagname (e.g. tags:churn_risk), " +
+      "status:open|pending|hold|solved|closed, " +
+      "priority:low|normal|high|urgent, " +
+      "assignee:none, " +
+      "created>YYYY-MM-DD, updated>YYYY-MM-DD. " +
+      "Combine with spaces (implicit AND). Examples: " +
+      "'requester:jane@example.com status:open' (one user's open tickets), " +
+      "'organization:\"Acme Corp\" created>2026-04-01' (recent org tickets), " +
+      "'tags:high_value_mrr priority:high' (urgent high-value issues). " +
+      "For domain-wide searches, use search_users first to find user IDs, then loop get_user_tickets. " +
+      "type:ticket is added automatically.",
     inputSchema: {
       query: z.string().min(1).describe("Zendesk search query (type:ticket is added automatically)"),
       page: z.number().int().positive().optional().describe("Page number (1-based)"),
@@ -229,6 +271,85 @@ server.registerTool(
     const raw = (await getTicketComments(ticket_id, { page })) as any;
     const data = {
       comments: (raw.comments ?? []).map(shapeComment),
+      count: raw.count ?? 0,
+      next_page: raw.next_page ?? null,
+      previous_page: raw.previous_page ?? null,
+    };
+    return structured(data);
+  }
+);
+
+server.registerTool(
+  "search_users",
+  {
+    description:
+      "Find Zendesk users by name, email, phone, or partial match. Use this first to locate a user before pulling their ticket history. " +
+      "Examples: 'jane@example.com' (exact email), 'Jane Doe' (full name), 'example.com' (domain — matches users whose email contains that string). " +
+      "Returns user IDs and basic profile fields. Pair with get_user_tickets to fetch their tickets.",
+    inputSchema: {
+      query: z
+        .string()
+        .min(1)
+        .describe("Search text: name, email, phone, or substring (e.g. domain)"),
+      page: z.number().int().positive().optional().describe("Page number (1-based)"),
+    },
+    outputSchema: {
+      users: z.array(z.object(UserSummaryShape)),
+      ...PaginationShape,
+    },
+    annotations: { readOnlyHint: true, openWorldHint: true },
+  },
+  async ({ query, page }) => {
+    const raw = (await searchUsers(query, { page })) as any;
+    const data = {
+      users: (raw.users ?? []).map(shapeUserSummary),
+      count: raw.count ?? 0,
+      next_page: raw.next_page ?? null,
+      previous_page: raw.previous_page ?? null,
+    };
+    return structured(data);
+  }
+);
+
+server.registerTool(
+  "get_user",
+  {
+    description:
+      "Retrieve a single Zendesk user by ID. Returns full user record (organization, role, contact details, custom fields). Use search_users to find IDs from email/name first.",
+    inputSchema: {
+      user_id: z.number().int().positive().describe("Zendesk user ID"),
+    },
+    annotations: { readOnlyHint: true, openWorldHint: true },
+  },
+  async ({ user_id }) => {
+    const user = await getUser(user_id);
+    return structured(user as Record<string, unknown>);
+  }
+);
+
+server.registerTool(
+  "get_user_tickets",
+  {
+    description:
+      "List all tickets requested (opened) by a specific user. Standard lookup flow: search_users (by email/name) → get_user_tickets (by their ID) → optionally get_ticket for full detail. Optional status filter narrows to open|pending|hold|solved|closed.",
+    inputSchema: {
+      user_id: z.number().int().positive().describe("Zendesk user ID (use search_users to find)"),
+      page: z.number().int().positive().optional().describe("Page number (1-based)"),
+      status: z
+        .enum(["open", "pending", "hold", "solved", "closed"])
+        .optional()
+        .describe("Filter by ticket status"),
+    },
+    outputSchema: {
+      tickets: z.array(z.object(TicketSummaryShape)),
+      ...PaginationShape,
+    },
+    annotations: { readOnlyHint: true, openWorldHint: true },
+  },
+  async ({ user_id, page, status }) => {
+    const raw = (await getUserTickets(user_id, { page, status })) as any;
+    const data = {
+      tickets: (raw.tickets ?? []).map(shapeTicketSummary),
       count: raw.count ?? 0,
       next_page: raw.next_page ?? null,
       previous_page: raw.previous_page ?? null,
